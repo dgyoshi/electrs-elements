@@ -1,5 +1,7 @@
 # electrs with elements
 
+API document is available here https://github.com/blockstream/esplora/blob/master/API.md
+
 ## Run
 
 `docker-compose up --build`
