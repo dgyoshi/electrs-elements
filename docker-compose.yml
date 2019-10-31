@@ -11,17 +11,20 @@ services:
     elementsd:
         container_name: 'elements'
         build:
-            context: ./elements.0.17.0
-            dockerfile: Dockerfile
+            context: .
+            args:
+                release: ${RELEASE}
+                chain: ${CHAIN}
         networks:
             app_net:
                 ipv4_address: 172.32.0.2
         ports:
             - "127.0.0.1:18444:18444"
             - "127.0.0.1:7040:7040"
+            - "127.0.0.1:18443:18443"
         command: >
             elementsd 
-            -chain=liquidregtest
+            -chain=${CHAIN}
             -debug
             -listenonion=0 
             -server=1 
@@ -49,7 +52,7 @@ services:
             -vvvv
             --timestamp
             --jsonrpc-import
-            --network liquidregtest
+            --network ${CHAIN}
             --cookie elements:elements
-            --daemon-rpc-addr 172.32.0.2:7040
+            --daemon-rpc-addr 172.32.0.2:${DAEMON_RPC}
             --http-addr 0.0.0.0:3002
